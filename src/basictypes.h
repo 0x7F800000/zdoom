@@ -44,8 +44,8 @@ typedef int						INTBOOL;
 #define CONST64(v) (v##LL)
 #define UCONST64(v) (v##ULL)
 #else
-#define CONST64(v) ((SQWORD)(v))
-#define UCONST64(v) ((QWORD)(v))
+#define CONST64(v) static_cast<SQWORD>(v)
+#define UCONST64(v) static_cast<QWORD>(v)
 #endif
 
 #if !defined(GUID_DEFINED)
@@ -81,14 +81,14 @@ union QWORD_UNION
 typedef SDWORD							fixed_t;
 typedef DWORD							dsfixed_t;				// fixedpt used by span drawer
 
-#define FIXED_MAX						(signed)(0x7fffffff)
-#define FIXED_MIN						(signed)(0x80000000)
+#define FIXED_MAX						static_cast<signed>(0x7fffffff)
+#define FIXED_MIN						static_cast<signed>(0x80000000)
 
-#define DWORD_MIN						((uint32)0)
-#define DWORD_MAX						((uint32)0xffffffff)
+#define DWORD_MIN						static_cast<uint32>(0)
+#define DWORD_MAX						static_cast<uint32>(0xffffffff)
 
 
-#ifdef __GNUC__
+#ifdef __GNUC__ || __clang__
 #define GCCPRINTF(stri,firstargi)		__attribute__((format(printf,stri,firstargi)))
 #define GCCFORMAT(stri)					__attribute__((format(printf,stri,0)))
 #define GCCNOWARN						__attribute__((unused))
